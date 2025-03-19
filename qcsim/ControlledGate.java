@@ -1,4 +1,4 @@
-class ControlledGate extends Gate{
+public class ControlledGate extends Gate{
     char[] index;
     GenericGate target;
     public ControlledGate(char[] input, GenericGate targetGate){

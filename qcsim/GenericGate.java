@@ -1,4 +1,4 @@
-class GenericGate extends Gate{
+public class GenericGate extends Gate{
 
     public GenericGate(){}
 

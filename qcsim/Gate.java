@@ -1,4 +1,4 @@
-abstract class Gate{
+public abstract class Gate{
     static Complex[][] I = new Complex[][]{{new Complex(1,0),new Complex(0,0)},{new Complex(0,0),new Complex(1,0)}};
     private Complex[][] matrix;
     public Gate(){}
