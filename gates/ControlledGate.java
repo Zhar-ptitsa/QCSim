@@ -8,20 +8,21 @@ class ControlledGate extends Gate{
     }
     
     public void extend(){
-        super.matrix(new double[][] {{1}});
+        super.matrix(new Complex[][] {{new Complex(1,0)}});
         coreSegment(0);
-        double[][] temp = super.matrix();
+        Complex[][] temp = super.matrix();
         for (int i = 0; i<temp.length;i++){
-            double magnitude = 0;
+            boolean works = true;
             for (int j = 0; j<temp[0].length;j++){
-                if (temp[i][j]!=0){
-                    magnitude += Math.pow(temp[i][j], 2);
+                if (temp[i][j].magnitude()!=0){
+                    works = false;
                 }
             }
-            if (magnitude!=1){
-                temp[i][i]=Math.sqrt(1-magnitude);
+            if (works){
+                temp[i][i]=new Complex(1,0);
             }
         }
+        super.matrix(temp);
     }
     
     private void coreSegment(int reading){
@@ -29,9 +30,9 @@ class ControlledGate extends Gate{
             return;
         }
         if (index[reading] == 'I'){
-            super.kron(new double[][] {{1,0},{0,1}});
+            super.kron(I);
         }else if (index[reading]=='C'){
-            super.kron(new double[][] {{0,0},{0,1}});
+            super.kron(new Complex[][]{{new Complex(0,0),new Complex(0,0)},{new Complex(0,0),new Complex(1,0)}});
         } else if(index[reading]=='T'){
             super.kron(target.matrix());
         }
