@@ -7,7 +7,7 @@ public class Complex {
     }
 
     public String toString(){
-        return real + " " + imaginary + "i";
+        return real + " + " + imaginary + "i";
     }
 
     public double magnitude(){
@@ -32,6 +32,6 @@ public class Complex {
     }
 
     public static Complex mult(Complex c1, Complex c2){
-        return new Complex(c1.get(0)*c2.get(0)+c1.get(1)*c2.get(1),c1.get(1)*c2.get(0)+c1.get(0)*c2.get(1));
+        return new Complex(c1.get(0)*c2.get(0)-c1.get(1)*c2.get(1),c1.get(1)*c2.get(0)+c1.get(0)*c2.get(1));
     }
 }
