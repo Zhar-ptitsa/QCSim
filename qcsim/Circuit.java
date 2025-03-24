@@ -222,6 +222,25 @@ public class Circuit{
         return -1;
     }
 
+    public ArrayList<int[]> measure(int count){
+        ArrayList<int[]> results = new ArrayList<int[]>();
+        for (int current = 0; current<count; current++){
+            int currentResult = measure();
+            boolean add = true;
+            for (int s = 0; s< results.size(); s++){
+                if (results.get(s)[0]==currentResult){
+                    results.get(s)[1]++;
+                    add = false;
+                    break;
+                }
+            }
+            if (add){
+                results.add(new int[]{currentResult, 1});
+            }
+        }
+        return results;
+    }
+
 
     public Complex[] stateVector(){
         Complex[] stateVector = new Complex[(int)Math.pow(2,size)];
