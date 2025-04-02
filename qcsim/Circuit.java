@@ -65,7 +65,7 @@ public class Circuit{
             gateList.add("RY"+String.format("%.3g",theta/Math.PI)+position);
         } else{
             gateList.add("RY"+String.format("%.3g",(2-(theta/Math.PI)))+position);
-        }    
+        }
         gateList.add("br");
     }
 
@@ -75,7 +75,7 @@ public class Circuit{
             gateList.add("RZ"+String.format("%.3g",theta/Math.PI)+position);
         } else{
             gateList.add("RZ"+String.format("%.3g",(2-(theta/Math.PI)))+position);
-        }    
+        }
         gateList.add("br");
     }
 
@@ -130,7 +130,7 @@ public class Circuit{
                     gateList.add(gate+String.format("%.3g",theta/Math.PI)+target);
                 } else{
                     gateList.add(gate+String.format("%.3g",(2-(theta/Math.PI)))+target);
-                }                 
+                }
                 addTarget = false;
             }
             gateList.add("   O   "+i);
@@ -140,7 +140,7 @@ public class Circuit{
                 gateList.add(gate+String.format("%.3g",theta/Math.PI)+target);
             } else{
                 gateList.add(gate+String.format("%.3g",(2-(theta/Math.PI)))+target);
-            } 
+            }
         }
         gateList.add("br");
 
@@ -192,7 +192,7 @@ public class Circuit{
     public double[] probabilityVector(){
         double[] probabilities = new double[(int)Math.pow(2,size)];
         Complex[] vector = stateVector();
-        for (int i = 0; i< vector.length; i++){          
+        for (int i = 0; i< vector.length; i++){
             probabilities[i] = Math.pow(vector[i].magnitude(),2);
         }
         return probabilities;
@@ -264,6 +264,10 @@ public class Circuit{
             result+=Arrays.toString(row)+"\n";
         }
         return result;
+    }
+
+    public int size(){
+    	return size;
     }
 
     public void draw(){
