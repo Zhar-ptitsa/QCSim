@@ -7,7 +7,7 @@ public class QFTDriver {
         circ.h(0);
         circ.cg(new int[]{0},1,"X");
         circ.cg(new int[]{0},2,"X");
-        circ.cg(new int[]{0},2,"X");
+        circ.cg(new int[]{0},3,"X");
         circ.draw();
         QFT qftAlg = new QFT();
         qftAlg.qft(circ);
