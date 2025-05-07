@@ -156,6 +156,10 @@ public class Circuit{
             MatrixMult(new ControlledGate(index, new RZ(0,0, theta)));
             return;
         }
+        if (gate.equals("RP")){
+            MatrixMult(new ControlledGate(index, new P(0,0, theta)));
+            return;
+        }
     }
 
     public void cg(int[] controls, int target, String gate){

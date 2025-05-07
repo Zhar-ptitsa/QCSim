@@ -9,7 +9,7 @@ public class QFT {
       for (int i = 0; i<circ.size();i++){
       	circ.h(i);
       	for (int j = i+1; j<circ.size();j++){
-      		circ.cg(new int[]{j},i,"RZ",Math.PI/Math.pow(2,(j-i)));
+      		circ.cg(new int[]{j},i,"RP",Math.PI/Math.pow(2,(j-i)));
       	}
       }
     }
