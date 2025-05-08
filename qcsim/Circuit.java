@@ -79,6 +79,16 @@ public class Circuit{
         gateList.add("br");
     }
 
+    public void rp(int position, double theta){
+        MatrixMult(new P(position,size-position-1,theta));
+        if (theta>=0){
+            gateList.add("RP"+String.format("%.3g",theta/Math.PI)+position);
+        } else{
+            gateList.add("RP"+String.format("%.3g",(2-(theta/Math.PI)))+position);
+        }
+        gateList.add("br");
+    }
+
     public void x(int position){
         MatrixMult(new X(position,size-position-1));
         gateList.add("   X   "+position);
