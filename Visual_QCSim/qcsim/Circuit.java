@@ -5,11 +5,11 @@ public class Circuit{
 
     private int size;
     private Complex[][] total;
-    private ArrayList<String> gateList;
+    public ArrayList<ArrayList<String>> gateList;
 
     public Circuit(int qubitCount){
         size = qubitCount;
-        gateList = new ArrayList<String>();
+        gateList = new ArrayList<ArrayList<String>>();
         total = new Complex[(int)Math.pow(2,size)][(int)Math.pow(2,size)];
         for (int i = 0; i<Math.pow(2,size);i++){
             for (int j = 0; j<Math.pow(2,size);j++){
@@ -44,67 +44,76 @@ public class Circuit{
 
     public void h(int position){
         MatrixMult(new H(position,size-position-1));
-        gateList.add("   H   "+position);
-        gateList.add("br");
+        gateList.add(new ArrayList<String>());
+        gateList.get(gateList.size()-1).add(""+ position);
+        gateList.get(gateList.size()-1).add("H");
     }
 
     public void rx(int position, double theta){
-        MatrixMult(new RX(position,size-position-1,theta));
+                gateList.add(new ArrayList<String>());
+
+        MatrixMult(new RX(position,size-position-1,theta*Math.PI));
+        gateList.get(gateList.size()-1).add(""+ position);
         if (theta>=0){
-            gateList.add("RX"+String.format("%.3g",theta/Math.PI)+position);
+            gateList.get(gateList.size()-1).add("RX"+String.format("%.3g",theta));
         } else{
-            gateList.add("RX"+String.format("%.3g",(2-(theta/Math.PI)))+position);
+            gateList.get(gateList.size()-1).add("RX"+String.format("%.3g",(2-(theta))));
         }
 
-        gateList.add("br");
     }
 
     public void ry(int position, double theta){
-        MatrixMult(new RY(position,size-position-1,theta));
+                gateList.add(new ArrayList<String>());
+        MatrixMult(new RY(position,size-position-1,theta*Math.PI));
+        gateList.get(gateList.size()-1).add(""+ position);
         if (theta>=0){
-            gateList.add("RY"+String.format("%.3g",theta/Math.PI)+position);
+            gateList.get(gateList.size()-1).add("RY"+String.format("%.3g",theta));
         } else{
-            gateList.add("RY"+String.format("%.3g",(2-(theta/Math.PI)))+position);
+            gateList.get(gateList.size()-1).add("RY"+String.format("%.3g",(2-(theta))));
         }
-        gateList.add("br");
     }
 
     public void rz(int position, double theta){
-        MatrixMult(new RZ(position,size-position-1,theta));
+                gateList.add(new ArrayList<String>());
+        MatrixMult(new RZ(position,size-position-1,theta*Math.PI));
+        gateList.get(gateList.size()-1).add(""+ position);
         if (theta>=0){
-            gateList.add("RZ"+String.format("%.3g",theta/Math.PI)+position);
+            gateList.get(gateList.size()-1).add("RZ"+String.format("%.3g",theta));
         } else{
-            gateList.add("RZ"+String.format("%.3g",(2-(theta/Math.PI)))+position);
+            gateList.get(gateList.size()-1).add("RZ"+String.format("%.3g",(2-(theta))));
         }
-        gateList.add("br");
     }
 
     public void rp(int position, double theta){
-        MatrixMult(new P(position,size-position-1,theta));
+                gateList.add(new ArrayList<String>());
+        MatrixMult(new P(position,size-position-1,theta*Math.PI));
+        gateList.get(gateList.size()-1).add(""+ position);
         if (theta>=0){
-            gateList.add("RP"+String.format("%.3g",theta/Math.PI)+position);
+            gateList.get(gateList.size()-1).add("RP"+String.format("%.3g",theta));
         } else{
-            gateList.add("RP"+String.format("%.3g",(2-(theta/Math.PI)))+position);
+            gateList.get(gateList.size()-1).add("RP"+String.format("%.3g",(2-(theta))));
         }
-        gateList.add("br");
     }
 
     public void x(int position){
+                gateList.add(new ArrayList<String>());
         MatrixMult(new X(position,size-position-1));
-        gateList.add("   X   "+position);
-        gateList.add("br");
+        gateList.get(gateList.size()-1).add(""+ position);
+        gateList.get(gateList.size()-1).add("X");
     }
 
     public void y(int position){
+                gateList.add(new ArrayList<String>());
         MatrixMult(new Y(position,size-position-1));
-        gateList.add("   Y   "+position);
-        gateList.add("br");
+        gateList.get(gateList.size()-1).add(""+ position);
+        gateList.get(gateList.size()-1).add("Y");
     }
 
     public void z(int position){
+                gateList.add(new ArrayList<String>());
         MatrixMult(new Z(position,size-position-1));
-        gateList.add("   Z   "+position);
-        gateList.add("br");
+        gateList.get(gateList.size()-1).add(""+ position);
+        gateList.get(gateList.size()-1).add("Z");
     }
 
 
@@ -130,64 +139,50 @@ public class Circuit{
 
 
     public void cg(int[] controls, int target, String gate, double theta){
-
+        gateList.add(new ArrayList<String>());
         char[] index = indexHelper(controls, target);
-
-        boolean addTarget = true;
-        for (int i: controls){
-            if (addTarget && i>target){
-                if (theta>=0){
-                    gateList.add(gate+String.format("%.3g",theta/Math.PI)+target);
-                } else{
-                    gateList.add(gate+String.format("%.3g",(2-(theta/Math.PI)))+target);
-                }
-                addTarget = false;
-            }
-            gateList.add("   O   "+i);
-        }
-        if (addTarget){
+            
+            gateList.get(gateList.size()-1).add(""+ target);
             if (theta>=0){
-                gateList.add(gate+String.format("%.3g",theta/Math.PI)+target);
+                gateList.get(gateList.size()-1).add(gate+String.format("%.3g",theta));
             } else{
-                gateList.add(gate+String.format("%.3g",(2-(theta/Math.PI)))+target);
+                gateList.get(gateList.size()-1).add(gate+String.format("%.3g",(2-(theta))));
             }
+
+        for (int i: controls){
+            gateList.get(gateList.size()-1).add(""+ i);
+            gateList.get(gateList.size()-1).add("O");
         }
-        gateList.add("br");
 
         if (gate.equals("RX")){
-            MatrixMult(new ControlledGate(index, new RX(0,0, theta)));
+            MatrixMult(new ControlledGate(index, new RX(0,0, theta*Math.PI)));
             return;
         }
         if (gate.equals("RY")){
-            MatrixMult(new ControlledGate(index, new RY(0,0, theta)));
+            MatrixMult(new ControlledGate(index, new RY(0,0, theta*Math.PI)));
             return;
         }
         if (gate.equals("RZ")){
-            MatrixMult(new ControlledGate(index, new RZ(0,0, theta)));
+            MatrixMult(new ControlledGate(index, new RZ(0,0, theta*Math.PI)));
             return;
         }
         if (gate.equals("RP")){
-            MatrixMult(new ControlledGate(index, new P(0,0, theta)));
+            MatrixMult(new ControlledGate(index, new P(0,0, theta*Math.PI)));
             return;
         }
     }
 
     public void cg(int[] controls, int target, String gate){
-
+        gateList.add(new ArrayList<String>());
         char[] index = indexHelper(controls, target);
-        boolean addTarget = true;
-        for (int i: controls){
-            if (addTarget && i>target){
-                gateList.add("   "+gate+"   "+target);
-                addTarget = false;
-            }
-            gateList.add("   O   "+i);
-        }
-        if (addTarget){
-            gateList.add("   "+gate+"   "+target);
-        }
-        gateList.add("br");
 
+            gateList.get(gateList.size()-1).add(""+ target);
+            gateList.get(gateList.size()-1).add(gate);
+
+        for (int i: controls){    
+            gateList.get(gateList.size()-1).add(""+ i);
+            gateList.get(gateList.size()-1).add("O");
+        }
 
         if (gate.equals("X")){
             MatrixMult(new ControlledGate(index, new X(0,0)));
@@ -284,35 +279,5 @@ public class Circuit{
     	return size;
     }
 
-    public void draw(){
-        System.out.print(" ");
-        System.out.print("  |0>   ".repeat(size));
-        System.out.print("\n ");
-        System.out.print("   |    ".repeat(size));
-        System.out.print("\n ");
-        System.out.print("   |    ".repeat(size));
-        System.out.print("\n ");
-        int position = 0;
-        for (int i = 0; i<gateList.size(); i++){
-            if (gateList.get(i).equals("br")){
-                for (int j = position; j<size;j++){
-                    System.out.print("   |    ");
-                }
-                System.out.print("\n ");
-                position = 0;
-                System.out.print("   |    ".repeat(size));
-                System.out.print("\n ");
-                System.out.print("   |    ".repeat(size));
-                System.out.print("\n ");
-            }else{
-                int currentPos = Integer.parseInt(gateList.get(i).substring(7));
-                for (int j = position; j<currentPos;j++){
-                    System.out.print("   |    ");
-                }
-                System.out.print(gateList.get(i).substring(0,7)+" ");
-                position = currentPos+1;
-            }
-        }
-        System.out.println("\n");
-    }
+    
 }
