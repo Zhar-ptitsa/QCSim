@@ -43,13 +43,17 @@ public class Circuit{
 
 
     public void h(int position){
+        if (position<size){
         MatrixMult(new H(position,size-position-1));
         gateList.add(new ArrayList<String>());
         gateList.get(gateList.size()-1).add(""+ position);
         gateList.get(gateList.size()-1).add("H");
+        }
     }
 
     public void rx(int position, double theta){
+                if (position<size){
+
                 gateList.add(new ArrayList<String>());
 
         MatrixMult(new RX(position,size-position-1,theta*Math.PI));
@@ -59,10 +63,13 @@ public class Circuit{
         } else{
             gateList.get(gateList.size()-1).add("RX"+String.format("%.3g",(2-(theta))));
         }
+    }
 
     }
 
     public void ry(int position, double theta){
+                if (position<size){
+
                 gateList.add(new ArrayList<String>());
         MatrixMult(new RY(position,size-position-1,theta*Math.PI));
         gateList.get(gateList.size()-1).add(""+ position);
@@ -72,8 +79,11 @@ public class Circuit{
             gateList.get(gateList.size()-1).add("RY"+String.format("%.3g",(2-(theta))));
         }
     }
+    }
 
     public void rz(int position, double theta){
+                if (position<size){
+
                 gateList.add(new ArrayList<String>());
         MatrixMult(new RZ(position,size-position-1,theta*Math.PI));
         gateList.get(gateList.size()-1).add(""+ position);
@@ -83,8 +93,11 @@ public class Circuit{
             gateList.get(gateList.size()-1).add("RZ"+String.format("%.3g",(2-(theta))));
         }
     }
+    }
 
     public void rp(int position, double theta){
+                if (position<size){
+
                 gateList.add(new ArrayList<String>());
         MatrixMult(new P(position,size-position-1,theta*Math.PI));
         gateList.get(gateList.size()-1).add(""+ position);
@@ -94,26 +107,36 @@ public class Circuit{
             gateList.get(gateList.size()-1).add("RP"+String.format("%.3g",(2-(theta))));
         }
     }
+    }
 
     public void x(int position){
+                if (position<size){
+
                 gateList.add(new ArrayList<String>());
         MatrixMult(new X(position,size-position-1));
         gateList.get(gateList.size()-1).add(""+ position);
         gateList.get(gateList.size()-1).add("X");
+                }
     }
 
     public void y(int position){
+                if (position<size){
+
                 gateList.add(new ArrayList<String>());
         MatrixMult(new Y(position,size-position-1));
         gateList.get(gateList.size()-1).add(""+ position);
         gateList.get(gateList.size()-1).add("Y");
+                }
     }
 
     public void z(int position){
+                if (position<size){
+
                 gateList.add(new ArrayList<String>());
         MatrixMult(new Z(position,size-position-1));
         gateList.get(gateList.size()-1).add(""+ position);
         gateList.get(gateList.size()-1).add("Z");
+                }
     }
 
 
@@ -139,6 +162,8 @@ public class Circuit{
 
 
     public void cg(int[] controls, int target, String gate, double theta){
+                if (target<size){
+
         gateList.add(new ArrayList<String>());
         char[] index = indexHelper(controls, target);
             
@@ -150,8 +175,10 @@ public class Circuit{
             }
 
         for (int i: controls){
+            if (i<size){
             gateList.get(gateList.size()-1).add(""+ i);
             gateList.get(gateList.size()-1).add("O");
+            }
         }
 
         if (gate.equals("RX")){
@@ -171,17 +198,21 @@ public class Circuit{
             return;
         }
     }
+    }
 
     public void cg(int[] controls, int target, String gate){
+                if (target<size){
         gateList.add(new ArrayList<String>());
         char[] index = indexHelper(controls, target);
 
             gateList.get(gateList.size()-1).add(""+ target);
             gateList.get(gateList.size()-1).add(gate);
 
-        for (int i: controls){    
+        for (int i: controls){   
+            if (i<size){ 
             gateList.get(gateList.size()-1).add(""+ i);
             gateList.get(gateList.size()-1).add("O");
+            }
         }
 
         if (gate.equals("X")){
@@ -196,6 +227,7 @@ public class Circuit{
             MatrixMult(new ControlledGate(index, new Z(0,0)));
             return;
         }
+    }
     }
 
     public double[] probabilityVector(){
@@ -244,7 +276,16 @@ public class Circuit{
                 }
             }
             if (add){
+                for (int i = 0; i<results.size();i++){
+                    if (currentResult<results.get(i)[0]){
+                        results.add(i,new int[]{currentResult, 1});
+                        add = false;
+                        break;
+                    }
+                }
+                if (add){
                 results.add(new int[]{currentResult, 1});
+                }
             }
         }
         return results;
