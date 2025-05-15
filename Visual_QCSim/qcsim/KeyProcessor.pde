@@ -1,7 +1,7 @@
 public static class KeyProcessor{
-  
-  
-  
+
+
+
  static void attach(String textInput, Circuit core){
    if (textInput.length()<3){
      return;
@@ -12,9 +12,9 @@ public static class KeyProcessor{
        double theta = float(textInput.substring(6,11));
        int[] controls = new int[(textInput.length()-11)/2];
        for (int i = 0; i<controls.length;i++){
-         controls[i]=textInput.charAt(12+2*i)-48; 
+         controls[i]=textInput.charAt(12+2*i)-48;
        }
-       
+
        if (textInput.charAt(2)=='x'){
          core.cg(controls, position, "RX", theta);
        }
@@ -28,13 +28,13 @@ public static class KeyProcessor{
        if (textInput.charAt(2)=='p'){
          core.cg(controls, position, "RP", theta);
        }
-       
+
      }else{
                    int position = int(textInput.substring(3,4));
 
        int[] controls = new int[(textInput.length()-4)/2];
        for (int i = 0; i<controls.length;i++){
-         controls[i]=textInput.charAt(5+2*i)-48; 
+         controls[i]=textInput.charAt(5+2*i)-48;
        }
        if (textInput.charAt(1)=='x'){
          core.cg(controls, position, "X");
@@ -45,13 +45,16 @@ public static class KeyProcessor{
        if (textInput.charAt(1)=='z'){
          core.cg(controls, position, "Z");
        }
-       
+       if (textInput.charAt(1)=='p'){
+         core.cg(controls, position, "P");
+       }
+
      }
    }else{
      if (textInput.charAt(0)=='r'){
                    int position = int(textInput.substring(3,4));
               double theta = float(textInput.substring(5,10));
-              
+
                      if (textInput.charAt(1)=='x'){
                        core.rx(position, theta);
                      }
@@ -64,7 +67,7 @@ public static class KeyProcessor{
                      if (textInput.charAt(1)=='p'){
                        core.rp(position, theta);
                      }
-              
+
      }else{
                    int position = int(textInput.substring(2,3));
        if (textInput.charAt(0)=='x'){
@@ -79,12 +82,14 @@ public static class KeyProcessor{
        if (textInput.charAt(0)=='h'){
          core.h(position);
        }
-       
+       if (textInput.charAt(0)=='p'){
+         core.p(position);
+       }
      }
    }
  }
- 
- 
- 
- 
+
+
+
+
 }
