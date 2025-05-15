@@ -99,7 +99,7 @@ public class Circuit{
                 if (position<size){
 
                 gateList.add(new ArrayList<String>());
-        MatrixMult(new P(position,size-position-1,theta*Math.PI));
+        MatrixMult(new RP(position,size-position-1,theta*Math.PI));
         gateList.get(gateList.size()-1).add(""+ position);
         if (theta>=0){
             gateList.get(gateList.size()-1).add("RP"+String.format("%.3g",theta));
@@ -140,6 +140,17 @@ public class Circuit{
     }
 
 
+    public void p(int position){
+                if (position<size){
+
+                gateList.add(new ArrayList<String>());
+        MatrixMult(new P(position,size-position-1));
+        gateList.get(gateList.size()-1).add(""+ position);
+        gateList.get(gateList.size()-1).add("P");
+                }
+    }
+
+
     public char[] indexHelper(int[] controls, int target){
         char[] index = new char[size];
         for (int i = 0; i<size;i++){
@@ -166,7 +177,7 @@ public class Circuit{
 
         gateList.add(new ArrayList<String>());
         char[] index = indexHelper(controls, target);
-            
+
             gateList.get(gateList.size()-1).add(""+ target);
             if (theta>=0){
                 gateList.get(gateList.size()-1).add(gate+String.format("%.3g",theta));
@@ -194,7 +205,7 @@ public class Circuit{
             return;
         }
         if (gate.equals("RP")){
-            MatrixMult(new ControlledGate(index, new P(0,0, theta*Math.PI)));
+            MatrixMult(new ControlledGate(index, new RP(0,0, theta*Math.PI)));
             return;
         }
     }
@@ -208,8 +219,8 @@ public class Circuit{
             gateList.get(gateList.size()-1).add(""+ target);
             gateList.get(gateList.size()-1).add(gate);
 
-        for (int i: controls){   
-            if (i<size){ 
+        for (int i: controls){
+            if (i<size){
             gateList.get(gateList.size()-1).add(""+ i);
             gateList.get(gateList.size()-1).add("O");
             }
@@ -225,6 +236,10 @@ public class Circuit{
         }
         if (gate.equals("Z")){
             MatrixMult(new ControlledGate(index, new Z(0,0)));
+            return;
+        }
+        if (gate.equals("P")){
+            MatrixMult(new ControlledGate(index, new P(0,0)));
             return;
         }
     }
@@ -320,5 +335,5 @@ public class Circuit{
     	return size;
     }
 
-    
+
 }
